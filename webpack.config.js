@@ -63,7 +63,7 @@ module.exports = {
 		new NoEmitOnErrorsPlugin(),
 		new CleanWebpackPlugin(),
 		new HtmlWebpackPlugin({
-			templateContent: "<div id=\"root\"></div>"
+			template: path.join(__dirname, "src", "public", "index.html")
 		}),
 		isDev && new ReactRefreshWebpackPlugin(),
 	].filter(Boolean)

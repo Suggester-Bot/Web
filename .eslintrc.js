@@ -27,7 +27,7 @@ module.exports = {
 		"plugin:jsx-a11y/recommended"
 	],
 	rules: {
-		"indent": ["error", "tab"],
+		"indent": ["error", "tab", { SwitchCase: 1 }],
 		"quotes": ["error", "double"],
 		"semi": ["error", "always"]
 	}

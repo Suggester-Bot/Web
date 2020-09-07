@@ -29,6 +29,8 @@ module.exports = {
 	rules: {
 		"indent": ["error", "tab", { SwitchCase: 1 }],
 		"quotes": ["error", "double"],
-		"semi": ["error", "always"]
+		"semi": ["error", "always"],
+
+		"react/prop-types": "off"
 	}
 };

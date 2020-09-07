@@ -1,0 +1,98 @@
+@use "../util.scss";
+
+$item-height: 1.5rem;
+
+/* Styles for the main list of selected roles */
+.role-selector {
+	display: flex;
+	position: relative;
+	width: 15rem;
+	flex-wrap: wrap;
+	align-items: center;
+	padding: 0.3rem;
+	border-radius: 1rem;
+	background-color: #202530;
+}
+
+.list-item {
+	border-width: 1px;
+	border-radius: 1rem;
+	height: $item-height;
+	margin: 0.1rem;
+	padding: 0 0.3rem;
+	overflow: hidden;
+}
+
+.role-item {
+	@extend .list-item;
+
+	display: flex;
+	align-items: center;
+}
+
+.role-name {
+	color: #EFEFEF;
+	padding: 0 0.5rem;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+}
+
+.remove-button {
+	@include util.darkens;
+	@include util.circle(1rem);
+
+	display: inline-block;
+}
+
+.add-role-button {
+	@extend .list-item;
+	@include util.darkens;
+	@include util.circle($item-height);
+
+	display: inline-block;
+	border-width: 2px;
+	border-color: gray;
+	padding: 0;
+
+	svg {
+		width: 100%;
+		height: 100%;
+		line {
+			stroke-width: 0.1rem;
+			stroke: #10c437;
+			stroke-linecap: round;
+		}
+	}
+}
+
+/* Styles for the list of unselected roles to pick from */
+.role-list {
+	width: 17rem;
+}
+
+.role-list-item {
+	@include util.lightens;
+	display: block;
+	width: 100%;
+	height: 2.5rem;
+	border-radius: 0.3rem;
+	font-size: 1.3em;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+}
+
+$theme-name: role-list;
+$placements: top, bottom, left, right;
+$bg-color: #203040;
+
+:global .tippy-box[data-theme="#{$theme-name}"] {
+	background-color: $bg-color;
+}
+
+@each $placement in $placements {
+	:global .tippy-box[data-theme="#{$theme-name}"][data-placement^="#{$placement}"] > .tippy-arrow::before {
+		border-#{$placement}-color: $bg-color;
+	}
+}

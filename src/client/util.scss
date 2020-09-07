@@ -1,0 +1,51 @@
+@mixin darkens {
+	position: relative;
+
+	&::before {
+		content: "";
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		border-radius: inherit;
+	}
+
+	&:hover::before {
+		background: rgba(0, 0, 0, 0.1);
+	}
+
+	&:active::before {
+		background: rgba(0, 0, 0, 0.2);
+	}
+}
+
+@mixin lightens {
+	position: relative;
+
+	&::before {
+		content: "";
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		border-radius: inherit;
+	}
+
+	&:hover::before {
+		background: rgba(255, 255, 255, 0.1);
+	}
+
+	&:active::before {
+		background: rgba(255, 255, 255, 0.2);
+	}
+}
+
+@mixin circle($size) {
+	min-width: $size;
+	min-height: $size;
+	max-width: $size;
+	max-height: $size;
+	border-radius: $size / 2;
+}

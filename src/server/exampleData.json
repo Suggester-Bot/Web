@@ -1,0 +1,32 @@
+{
+	"guilds": {
+		"688522899510001849": {
+			"id": "688522899510001849",
+			"name": "Announcer",
+			"iconHash": "738a2cbeb29892010e487061a730904b",
+			"roles": {
+				"123": {
+					"id": "123",
+					"name": "Role #1",
+					"color": "#FF0000"
+				},
+				"234": {
+					"id": "234",
+					"name": "Role #2",
+					"color": "#00FF00"
+				},
+				"345": {
+					"id": "345",
+					"name": "Role #3",
+					"color": "#0000FF"
+				}
+			}
+		},
+		"566002482166104066": {
+			"id": "566002482166104066",
+			"name": "Announcer Bluebird",
+			"iconHash": "a_a906a9a3f54e8e5e9eeef33974db4ba7",
+			"roles": {}
+		}
+	}
+}

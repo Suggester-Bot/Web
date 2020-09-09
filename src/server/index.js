@@ -12,6 +12,10 @@ const discordAuthMiddleware = require("./discordAuth.js");
 const app = express();
 app.use(helmet());
 
+if (process.env.REVERSE_PROXY === "true") {
+	app.set("trust proxy", 1);
+}
+
 app.use(expressSession({
 	secret: process.env.SESSION_SECRET,
 	resave: false,

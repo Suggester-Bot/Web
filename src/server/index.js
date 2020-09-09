@@ -12,17 +12,13 @@ const discordAuthMiddleware = require("./discordAuth.js");
 const app = express();
 app.use(helmet());
 
-if (process.env.REVERSE_PROXY === "true") {
-	app.set("trust proxy", 1);
-}
-
 app.use(expressSession({
 	secret: process.env.SESSION_SECRET,
 	resave: false,
 	saveUninitialized: true,
-	cookie: { secure: process.env.NODE_ENV === "production" },
-	store: new MongoStore({ url: process.env.SESSION_MONGO_URI }),
-	proxy: process.env.REVERSE_PROXY === "true"
+	// TODO: configure secure cookies in production
+	// cookie: { secure: process.env.NODE_ENV === "production" },
+	store: new MongoStore({ url: process.env.SESSION_MONGO_URI })
 }));
 
 app.use(discordAuthMiddleware);

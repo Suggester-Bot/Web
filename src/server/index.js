@@ -21,7 +21,8 @@ app.use(expressSession({
 	resave: false,
 	saveUninitialized: true,
 	cookie: { secure: process.env.NODE_ENV === "production" },
-	store: new MongoStore({ url: process.env.SESSION_MONGO_URI })
+	store: new MongoStore({ url: process.env.SESSION_MONGO_URI }),
+	proxy: process.env.REVERSE_PROXY === "true"
 }));
 
 app.use(discordAuthMiddleware);

@@ -9,8 +9,23 @@ const helmet = require("helmet");
 
 const discordAuthMiddleware = require("./discordAuth.js");
 
+const isDev = process.env.NODE_ENV === "development";
+
 const app = express();
-app.use(helmet());
+app.use(helmet({
+	contentSecurityPolicy: {
+		directives: {
+			defaultSrc: ["'self'"],
+			baseUri: ["'self'"],
+			blockAllMixedContent: [],
+			imgSrc: ["'self'", "'data:'"],
+			objectSrc: ["'none'"],
+			scriptSrc: ["'self'"].concat(isDev ? ["'unsafe-inline'", "'unsafe-eval'"] : []),
+			scriptSrcAttr: ["'none'"],
+			styleSrc: ["'self'"]
+		}
+	}
+}));
 
 app.use(expressSession({
 	secret: process.env.SESSION_SECRET,

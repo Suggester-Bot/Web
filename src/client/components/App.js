@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import icon from "../assets/icon.png";
 import styles from "./App.scss";
-import { RoleSelector } from "./RoleSelector";
-import { ChannelSelector } from "./ChannelSelector";
+import { RoleSelector } from "./selectors/RoleSelector";
+import { ChannelSelector } from "./selectors/ChannelSelector";
 
 const exampleRoles = [
 	{

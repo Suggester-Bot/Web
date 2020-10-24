@@ -8,7 +8,7 @@ const ReactRefreshWebpackPlugin = require("@pmmmwh/react-refresh-webpack-plugin"
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 module.exports = env => {
-	const isDev = !(env && env.production);
+	const isDev = env === "development";
 
 	return {
 		entry: ["babel-polyfill", isDev && "webpack-hot-middleware/client", "./src/client/index.js"].filter(Boolean),

@@ -1,6 +1,6 @@
 import React from "react";
 import styles from "./ChannelSelector.scss";
-import { Selector } from "./selectors/Selector";
+import { Selector } from "./Selector";
 
 const ChannelList = ({ items, select }) => (
 	<div className={styles.channelSelectionList}>

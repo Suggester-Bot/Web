@@ -1,6 +1,6 @@
 import React from "react";
 import styles from "./RoleSelector.scss";
-import { Selector } from "./selectors/Selector";
+import { Selector } from "./Selector";
 
 const RoleList = ({ items, select }) => (
 	<div className={styles.roleSelectionList}>

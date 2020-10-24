@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import icon from "../assets/icon.png";
 import styles from "./App.scss";
 import { RoleSelector } from "./RoleSelector";
+import { ChannelSelector } from "./ChannelSelector";
 
 const exampleRoles = [
 	{
@@ -26,9 +27,29 @@ const exampleRoles = [
 	}
 ];
 
+const exampleChannels = [
+	{
+		id: "123",
+		name: "Channel #12334567"
+	},
+	{
+		id: "234",
+		name: "Channel #2"
+	},
+	{
+		id: "345",
+		name: "Channel #3"
+	},
+	{
+		id: "456",
+		name: `A Channel with a ${"really ".repeat(10)} long name`
+	}
+];
+
 export const App = () => {
 	const [userData, setUserData] = useState(null);
 	const [selectedRoleIDs, setSelectedRoleIDs] = useState(["123", "234"]);
+	const [selectedChannelIDs, setSelectedChannelIDs] = useState(["123", "234"]);
 
 	useEffect(() => {
 		fetch("/api/user")
@@ -64,11 +85,21 @@ export const App = () => {
 					</span>
 				</div>
 			</div>
-			<div>
-				<RoleSelector
-					roles={exampleRoles}
-					selectedRoleIDs={selectedRoleIDs}
-					setSelectedRoleIDs={setSelectedRoleIDs}/>
+			<div style={{ position: "relative" }}>
+				<div style={{ display: "flex", justifyContent: "center" }}>
+					<div style={{ margin: "2rem" }}>
+						<RoleSelector
+							roles={exampleRoles}
+							selectedRoleIDs={selectedRoleIDs}
+							setSelectedRoleIDs={setSelectedRoleIDs} />
+					</div>
+					<div style={{ margin: "2rem" }}>
+						<ChannelSelector
+							channels={exampleChannels}
+							selectedChannelIDs={selectedChannelIDs}
+							setSelectedChannelIDs={setSelectedChannelIDs} />
+					</div>
+				</div>
 			</div>
 		</div>
 	);

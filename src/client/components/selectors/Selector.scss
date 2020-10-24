@@ -1,0 +1,48 @@
+@use "../../util.scss";
+
+.selector {
+	display: flex;
+	position: relative;
+	width: 15rem;
+	flex-wrap: wrap;
+	align-items: center;
+	padding: 0.3rem;
+	border-radius: 1rem;
+	background-color: #202530;
+}
+
+$item-height: var(--item-height, 1.5rem);
+
+.selectItemButton {
+	@include util.darkens;
+	@include util.circle($item-height);
+
+	display: inline-block;
+	border-width: 2px;
+	border-color: gray;
+	padding: 0;
+
+	svg {
+		width: 100%;
+		height: 100%;
+		line {
+			stroke-width: 0.1rem;
+			stroke: #10c437;
+			stroke-linecap: round;
+		}
+	}
+}
+
+$theme-name: selector;
+$placements: top, bottom, left, right;
+$bg-color: #203040;
+
+:global .tippy-box[data-theme="#{$theme-name}"] {
+	background-color: $bg-color;
+}
+
+@each $placement in $placements {
+	:global .tippy-box[data-theme="#{$theme-name}"][data-placement^="#{$placement}"] > .tippy-arrow::before {
+		border-#{$placement}-color: $bg-color;
+	}
+}

@@ -1,24 +1,24 @@
 import React from "react";
-import Tippy from "@tippyjs/react";
 import styles from "./RoleSelector.scss";
+import { Selector } from "./selectors/Selector";
 
-const RoleList = ({ roles, onSelect }) => (
-	<div className={styles.roleList}>
-		{roles.map(role => (
-			<button key={role.id} className={styles.roleListItem} style={{ color: role.color }} onClick={() => onSelect(role.id)}>
+const RoleList = ({ items, select }) => (
+	<div className={styles.roleSelectionList}>
+		{items.map(role => (
+			<button key={role.id} className={styles.roleSelectionItem} style={{ color: role.color }} onClick={() => select(role.id)}>
 				{role.name}
 			</button>
 		))}
 	</div>
 );
 
-const RoleItem = ({ color, name, onRemove }) => (
-	<div style={{ borderColor: color }} className={styles.roleItem}>
+const RoleItem = ({ item, unselect }) => (
+	<div style={{ borderColor: item.color }} className={styles.roleItem}>
 		<button
-			style={{ backgroundColor: color }}
-			onClick={onRemove}
+			style={{ backgroundColor: item.color }}
+			onClick={() => unselect(item.id)}
 			className={styles.removeButton} />
-		<span className={styles.roleName}>{name}</span>
+		<span className={styles.roleName}>{item.name}</span>
 	</div>
 );
 
@@ -27,33 +27,12 @@ export const RoleSelector = ({ roles, selectedRoleIDs, setSelectedRoleIDs }) => 
 	const selectedRoles = roles.filter(role => selectedRoleSet.has(role.id));
 	const unselectedRoles = roles.filter(role => !selectedRoleSet.has(role.id));
 
-	const selectRole = roleID => setSelectedRoleIDs([...selectedRoleIDs, roleID].sort());
-
-	return (
-		<div className={styles.roleSelector}>
-			{selectedRoles.map(
-				role => <RoleItem
-					color={role.color}
-					name={role.name}
-					key={role.id}
-					onRemove={() => setSelectedRoleIDs(selectedRoleIDs.filter(roleID => roleID !== role.id))} />
-			)}
-			{
-				unselectedRoles.length ? <Tippy
-					content={<RoleList roles={unselectedRoles} onSelect={selectRole} />}
-					theme="role-list"
-					trigger="click"
-					placement="right"
-					interactive={true}
-					disabled={unselectedRoles.length === 0} >
-					<button className={styles.addRoleButton}>
-						<svg>
-							<line x1="50%" y1="20%" x2="50%" y2="80%" />
-							<line x1="20%" y1="50%" x2="80%" y2="50%" />
-						</svg>
-					</button>
-				</Tippy> : null
-			}
-		</div>
-	);
+	return <Selector
+		selectedItems = {selectedRoles}
+		unselectedItems= {unselectedRoles}
+		ItemComponent = {RoleItem}
+		selectItem = {roleID => setSelectedRoleIDs([...selectedRoleIDs, roleID].sort())}
+		unselectItem = {roleID => setSelectedRoleIDs(selectedRoleIDs.filter(id => id !== roleID))}
+		SelectionComponent = {RoleList}
+	/>;
 };

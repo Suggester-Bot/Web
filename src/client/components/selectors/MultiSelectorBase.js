@@ -1,8 +1,8 @@
 import React from "react";
 import Tippy from "@tippyjs/react";
-import styles from "./Selector.scss";
+import styles from "./MultiSelectorBase.scss";
 
-export const Selector = ({ selectedItems, unselectedItems, ItemComponent, selectItem, unselectItem, SelectionComponent }) => (
+export const MultiSelectorBase = ({ selectedItems, unselectedItems, ItemComponent, selectItem, unselectItem, SelectionComponent }) => (
 	<div className={styles.selector}>
 		{selectedItems.map(
 			item => <ItemComponent key={item.id} item={item} unselect={unselectItem}/>

@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import icon from "../assets/icon.png";
 import styles from "./App.scss";
-import { RoleSelector } from "./selectors/RoleSelector";
-import { ChannelSelector } from "./selectors/ChannelSelector";
+import { MultiRoleSelector } from "./selectors/MultiRoleSelector";
+import { MultiChannelSelector } from "./selectors/MultiChannelSelector";
 
 const exampleRoles = [
 	{
@@ -88,13 +88,13 @@ export const App = () => {
 			<div style={{ position: "relative" }}>
 				<div style={{ display: "flex", justifyContent: "center" }}>
 					<div style={{ margin: "2rem" }}>
-						<RoleSelector
+						<MultiRoleSelector
 							roles={exampleRoles}
 							selectedRoleIDs={selectedRoleIDs}
 							setSelectedRoleIDs={setSelectedRoleIDs} />
 					</div>
 					<div style={{ margin: "2rem" }}>
-						<ChannelSelector
+						<MultiChannelSelector
 							channels={exampleChannels}
 							selectedChannelIDs={selectedChannelIDs}
 							setSelectedChannelIDs={setSelectedChannelIDs} />

@@ -1,6 +1,6 @@
 import React from "react";
-import styles from "./RoleSelector.scss";
-import { Selector } from "./Selector";
+import styles from "./MultiRoleSelector.scss";
+import { MultiSelectorBase } from "./MultiSelectorBase";
 
 const RoleList = ({ items, select }) => (
 	<div className={styles.roleSelectionList}>
@@ -22,12 +22,12 @@ const RoleItem = ({ item, unselect }) => (
 	</div>
 );
 
-export const RoleSelector = ({ roles, selectedRoleIDs, setSelectedRoleIDs }) => {
+export const MultiRoleSelector = ({ roles, selectedRoleIDs, setSelectedRoleIDs }) => {
 	const selectedRoleSet = new Set(selectedRoleIDs);
 	const selectedRoles = roles.filter(role => selectedRoleSet.has(role.id));
 	const unselectedRoles = roles.filter(role => !selectedRoleSet.has(role.id));
 
-	return <Selector
+	return <MultiSelectorBase
 		selectedItems = {selectedRoles}
 		unselectedItems= {unselectedRoles}
 		ItemComponent = {RoleItem}

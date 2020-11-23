@@ -1,6 +1,6 @@
 import React from "react";
-import styles from "./ChannelSelector.scss";
-import { Selector } from "./Selector";
+import styles from "./MultiChannelSelector.scss";
+import { MultiSelectorBase } from "./MultiSelectorBase";
 
 const ChannelList = ({ items, select }) => (
 	<div className={styles.channelSelectionList}>
@@ -21,12 +21,12 @@ const ChannelItem = ({ item, unselect }) => (
 	</div>
 );
 
-export const ChannelSelector = ({ channels, selectedChannelIDs, setSelectedChannelIDs }) => {
+export const MultiChannelSelector = ({ channels, selectedChannelIDs, setSelectedChannelIDs }) => {
 	const selectedChannelSet = new Set(selectedChannelIDs);
 	const selectedChannels = channels.filter(role => selectedChannelSet.has(role.id));
 	const unselectedChannels = channels.filter(role => !selectedChannelSet.has(role.id));
 
-	return <Selector
+	return <MultiSelectorBase
 		selectedItems = {selectedChannels}
 		unselectedItems= {unselectedChannels}
 		ItemComponent = {ChannelItem}

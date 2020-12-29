@@ -1,6 +1,6 @@
 import styles from "./MultiChannelSelector.scss";
 import { MultiSelectorBase } from "./MultiSelectorBase";
-import { Channel } from "../../types/types"
+import { Channel } from "../../types/types";
 
 const ChannelList = ({ items, select }: { items: Channel[], select: (channelID: string) => void } ) => (
 	<div className={styles.channelSelectionList}>

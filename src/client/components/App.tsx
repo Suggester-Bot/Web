@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import icon from "../assets/icon.png";
 import styles from "./App.scss";
 import { MultiRoleSelector } from "./selectors/MultiRoleSelector";
 import { MultiChannelSelector } from "./selectors/MultiChannelSelector";
+import { User } from "../types/types";
 
 const exampleRoles = [
 	{
@@ -47,7 +48,7 @@ const exampleChannels = [
 ];
 
 export const App = () => {
-	const [userData, setUserData] = useState(null);
+	const [userData, setUserData] = useState<User | null>(null);
 	const [selectedRoleIDs, setSelectedRoleIDs] = useState(["123", "234"]);
 	const [selectedChannelIDs, setSelectedChannelIDs] = useState(["123", "234"]);
 

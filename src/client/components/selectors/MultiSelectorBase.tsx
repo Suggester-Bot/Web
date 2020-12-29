@@ -1,11 +1,12 @@
-import React from "react";
+import { ReactElement } from "react";
 import Tippy from "@tippyjs/react";
 import styles from "./MultiSelectorBase.scss";
 
-export const MultiSelectorBase = ({ selectedItems, unselectedItems, ItemComponent, selectItem, unselectItem, SelectionComponent }) => (
+// TODO: remove `any`
+export const MultiSelectorBase: ((params: any) => ReactElement) = ({ selectedItems, unselectedItems, ItemComponent, selectItem, unselectItem, SelectionComponent }) => (
 	<div className={styles.selector}>
 		{selectedItems.map(
-			item => <ItemComponent key={item.id} item={item} unselect={unselectItem}/>
+			(item: { id: string }) => <ItemComponent key={item.id} item={item} unselect={unselectItem} />
 		)}
 		{
 			unselectedItems.length ? <Tippy

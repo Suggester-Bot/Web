@@ -17,7 +17,10 @@ module.exports = {
 		ecmaVersion: 11,
 		sourceType: "module"
 	},
-	settings: { react: { version: "detect" } },
+	settings: {
+		"react": { version: "detect" },
+		"import/resolver": "webpack"
+	},
 	extends: [
 		"eslint:recommended",
 		"plugin:react/recommended",
@@ -26,11 +29,22 @@ module.exports = {
 		"plugin:import/warnings",
 		"plugin:jsx-a11y/recommended"
 	],
+	overrides: [
+		{
+			files: ["*.ts"],
+			parser: "@typescript-eslint/parser",
+			extends: [
+				"plugin:@typescript-eslint/recommended",
+				"plugin:@typescript-eslint/recommended-requiring-type-checking"
+			]
+		}
+	],
 	rules: {
 		"indent": ["error", "tab", { SwitchCase: 1 }],
 		"quotes": ["error", "double"],
 		"semi": ["error", "always"],
 
-		"react/prop-types": "off"
+		"react/prop-types": "off",
+		"react/react-in-jsx-scope": "off"
 	}
 };

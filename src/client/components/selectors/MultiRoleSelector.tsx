@@ -1,8 +1,8 @@
-import React from "react";
+import { Role } from "../../types/types";
 import styles from "./MultiRoleSelector.scss";
 import { MultiSelectorBase } from "./MultiSelectorBase";
 
-const RoleList = ({ items, select }) => (
+const RoleList = ({ items, select }: { items: Role[], select: (roleID: string) => void } ) => (
 	<div className={styles.roleSelectionList}>
 		{items.map(role => (
 			<button key={role.id} className={styles.roleSelectionItem} style={{ color: role.color }} onClick={() => select(role.id)}>
@@ -12,7 +12,7 @@ const RoleList = ({ items, select }) => (
 	</div>
 );
 
-const RoleItem = ({ item, unselect }) => (
+const RoleItem = ({ item, unselect }: { item: Role, unselect: (roleID: string) => void }) => (
 	<div style={{ borderColor: item.color }} className={styles.roleItem}>
 		<button
 			style={{ backgroundColor: item.color }}
@@ -22,7 +22,13 @@ const RoleItem = ({ item, unselect }) => (
 	</div>
 );
 
-export const MultiRoleSelector = ({ roles, selectedRoleIDs, setSelectedRoleIDs }) => {
+type MRSProps = {
+	roles: Role[];
+	selectedRoleIDs: string[];
+	setSelectedRoleIDs: (ids: string[]) => void;
+}
+
+export const MultiRoleSelector = ({ roles, selectedRoleIDs, setSelectedRoleIDs }: MRSProps) => {
 	const selectedRoleSet = new Set(selectedRoleIDs);
 	const selectedRoles = roles.filter(role => selectedRoleSet.has(role.id));
 	const unselectedRoles = roles.filter(role => !selectedRoleSet.has(role.id));
@@ -31,8 +37,8 @@ export const MultiRoleSelector = ({ roles, selectedRoleIDs, setSelectedRoleIDs }
 		selectedItems = {selectedRoles}
 		unselectedItems= {unselectedRoles}
 		ItemComponent = {RoleItem}
-		selectItem = {roleID => setSelectedRoleIDs([...selectedRoleIDs, roleID].sort())}
-		unselectItem = {roleID => setSelectedRoleIDs(selectedRoleIDs.filter(id => id !== roleID))}
+		selectItem = {(roleID: string) => setSelectedRoleIDs([...selectedRoleIDs, roleID].sort())}
+		unselectItem = {(roleID: string) => setSelectedRoleIDs(selectedRoleIDs.filter(id => id !== roleID))}
 		SelectionComponent = {RoleList}
 	/>;
 };

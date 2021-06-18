@@ -1,7 +1,7 @@
 const path = require("path");
 const outDir = path.join(__dirname, "dist");
 
-const { EnvironmentPlugin, HotModuleReplacementPlugin } = require("webpack");
+const { ProgressPlugin, EnvironmentPlugin, HotModuleReplacementPlugin } = require("webpack");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const ReactRefreshWebpackPlugin = require("@pmmmwh/react-refresh-webpack-plugin");
@@ -12,13 +12,15 @@ module.exports = env => {
 	const isDev = env === "development";
 
 	return {
-		resolve: { extensions: [".tsx", ".ts", ".js", ".jsx", ".json"] },
 		entry: ["babel-polyfill", isDev && "webpack-hot-middleware/client", "./src/client/index.tsx"].filter(Boolean),
+		context: __dirname,
+		resolve: { extensions: [".tsx", ".ts", ".js", ".jsx", ".json"] },
 		mode: isDev ? "development" : "production",
 		output: {
 			path: outDir,
 			publicPath: "/",
 		},
+		devtool: isDev ? "eval-source-map" : false,
 		module: {
 			rules: [
 				{
@@ -74,6 +76,7 @@ module.exports = env => {
 			]
 		},
 		plugins: [
+			new ProgressPlugin(),
 			new ForkTsCheckerWebpackPlugin(),
 			new EnvironmentPlugin({
 				NODE_ENV: isDev ? "development" : "production",

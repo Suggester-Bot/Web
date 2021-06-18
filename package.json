@@ -7,7 +7,7 @@
 		"build": "webpack --env production",
 		"serve": "node src/server/index.js",
 		"start": "concurrently npm:dev:*",
-		"dev:client": "webpack --watch --devtool source-map --env development --hot",
+		"dev:client": "webpack --watch --env development --hot",
 		"dev:server": "cross-env NODE_ENV=development nodemon --watch src/server src/server/index.js"
 	},
 	"dependencies": {

@@ -1,9 +1,8 @@
 module.exports = {
-	parser: "babel-eslint",
 	env: {
-		"browser": true,
-		"es2020": true,
-		"node": true
+		browser: true,
+		es2020: true,
+		node: true
 	},
 	plugins: [
 		"react",
@@ -31,12 +30,15 @@ module.exports = {
 	],
 	overrides: [
 		{
-			files: ["*.ts"],
+			files: ["*.ts", "*.tsx"],
 			parser: "@typescript-eslint/parser",
 			extends: [
 				"plugin:@typescript-eslint/recommended",
 				"plugin:@typescript-eslint/recommended-requiring-type-checking"
-			]
+			],
+			rules: {
+				"@typescript-eslint/explicit-module-boundary-types": "off"
+			}
 		}
 	],
 	rules: {

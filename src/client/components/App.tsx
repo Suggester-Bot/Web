@@ -55,7 +55,9 @@ export const App = () => {
 	useEffect(() => {
 		fetch("/api/user")
 			.then(req => req.json())
-			.then(setUserData);
+			.then(setUserData)
+			// TODO: error handling
+			.catch(err => console.error(err));
 	}, []);
 
 	if (userData === null) {

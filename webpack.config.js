@@ -11,6 +11,13 @@ const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
 module.exports = env => {
 	const isDev = env === "development";
 
+	const postcssOptions = {
+		plugins: [
+			["autoprefixer", {}],
+			!isDev && ["cssnano", { preset: "default" }]
+		].filter(Boolean)
+	};
+
 	return {
 		entry: ["babel-polyfill", isDev && "webpack-hot-middleware/client", "./src/client/index.tsx"].filter(Boolean),
 		context: __dirname,
@@ -47,13 +54,19 @@ module.exports = env => {
 						MiniCssExtractPlugin.loader,
 						{
 							loader: "css-loader",
-							options: { importLoaders: 2, modules: {
-								auto: /(?<!\.(?:global|min))\.s?css$/,
-								exportLocalsConvention: "dashesOnly",
-								localIdentName: "[local]-[hash:base64:10]"
-							} },
+							options: {
+								importLoaders: 2,
+								modules: {
+									auto: /(?<!\.(?:global|min))\.s?css$/,
+									exportLocalsConvention: "dashesOnly",
+									localIdentName: "[local]-[hash:base64:10]"
+								}
+							},
 						},
-						"postcss-loader",
+						{
+							loader: "postcss-loader",
+							options: { postcssOptions }
+						},
 						"sass-loader"
 					]
 				},
@@ -65,13 +78,15 @@ module.exports = env => {
 							loader: "css-loader",
 							options: { importLoaders: 1 },
 						},
-						"postcss-loader"
+						{
+							loader: "postcss-loader",
+							options: { postcssOptions }
+						}
 					]
 				},
 				{
 					test: /\.(?:png|woff|woff2|eot|ttf|svg)$/,
 					use: { loader: "file-loader" }
-
 				}
 			]
 		},

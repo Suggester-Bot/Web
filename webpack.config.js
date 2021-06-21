@@ -41,10 +41,7 @@ module.exports = env => {
 								["@babel/preset-react", { runtime: "automatic", development: isDev }],
 								"@babel/preset-typescript"
 							],
-							plugins: [
-								"@babel/plugin-proposal-class-properties",
-								isDev && require.resolve("react-refresh/babel")
-							].filter(Boolean)
+							plugins: isDev ? ["react-refresh/babel"] : []
 						}
 					}
 				},

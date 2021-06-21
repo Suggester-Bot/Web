@@ -6,9 +6,7 @@
 	"scripts": {
 		"build": "webpack --env production",
 		"serve": "node src/server/index.js",
-		"start": "concurrently npm:dev:*",
-		"dev:client": "webpack --watch --env development --hot",
-		"dev:server": "cross-env NODE_ENV=development nodemon --watch src/server src/server/index.js"
+		"start": "cross-env NODE_ENV=development nodemon --watch src/server src/server/index.js"
 	},
 	"dependencies": {
 		"@tippyjs/react": "^4.2.5",
@@ -38,7 +36,6 @@
 		"autoprefixer": "^9.8.6",
 		"babel-loader": "^8.2.2",
 		"clean-webpack-plugin": "^3.0.0",
-		"concurrently": "^5.3.0",
 		"cross-env": "^7.0.3",
 		"css-loader": "^4.3.0",
 		"cssnano": "^4.1.11",

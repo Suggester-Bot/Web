@@ -89,7 +89,7 @@ module.exports = env => {
 		},
 		plugins: [
 			new ProgressPlugin(),
-			new ForkTsCheckerWebpackPlugin(),
+			new ForkTsCheckerWebpackPlugin({ eslint: { files: "./src/client/**/*.{ts,tsx,js,jsx}" } }),
 			new EnvironmentPlugin({
 				NODE_ENV: isDev ? "development" : "production",
 			}),

@@ -4,7 +4,7 @@ const port = process.env.PORT || 3000;
 
 const express = require("express");
 const expressSession = require("express-session");
-const MongoStore = require("connect-mongo")(expressSession);
+const MongoStore = require("connect-mongo");
 const helmet = require("helmet");
 
 const discordAuthMiddleware = require("./discordAuth.js");
@@ -33,7 +33,10 @@ app.use(expressSession({
 	saveUninitialized: true,
 	// TODO: configure secure cookies in production
 	// cookie: { secure: process.env.NODE_ENV === "production" },
-	store: new MongoStore({ url: process.env.SESSION_MONGO_URI })
+	store: MongoStore.create({
+		mongoUrl: process.env.SESSION_MONGO_URI,
+		dbName: process.env.SESSION_MONGO_DB_NAME
+	})
 }));
 
 app.use(discordAuthMiddleware);

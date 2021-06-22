@@ -1,5 +1,4 @@
 const path = require("path");
-const outDir = path.join(__dirname, "dist");
 
 const { ProgressPlugin, EnvironmentPlugin, HotModuleReplacementPlugin } = require("webpack");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
@@ -7,6 +6,8 @@ const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const ReactRefreshWebpackPlugin = require("@pmmmwh/react-refresh-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
+
+const clientDist = path.join(__dirname, "client", "dist");
 
 module.exports = env => {
 	const isDev = env === "development";
@@ -24,7 +25,7 @@ module.exports = env => {
 		resolve: { extensions: [".tsx", ".ts", ".js", ".jsx", ".json"] },
 		mode: isDev ? "development" : "production",
 		output: {
-			path: outDir,
+			path: clientDist,
 			publicPath: "/",
 		},
 		devtool: isDev ? "eval-source-map" : false,

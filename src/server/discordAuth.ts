@@ -1,8 +1,32 @@
-const querystring = require("querystring");
-const { nanoid } = require("nanoid");
-const axios = require("axios");
+import querystring from "querystring";
+import { nanoid } from "nanoid";
+import axios from "axios";
+import type { RequestHandler } from "express";
 
-const discordAuthMiddleware = async (req, res, next) => {
+// TODO: remove `eslint-disable-next-line`s and actually fix the issues
+
+declare module "express-session" {
+	interface SessionData {
+		oauthState: string;
+		discordUser: {
+			id: string;
+			username: string;
+			avatar: string;
+			discriminator: string;
+			// ...
+			guilds: Array<{
+				id: string;
+				name: string;
+				icon: string;
+				owner: boolean;
+				owner_id: string;
+				// ...
+			}>;
+		}
+	}
+}
+
+export const discordAuthMiddleware: RequestHandler = async (req, res, next) => {
 	const basePath = "/auth/discord";
 
 	if (req.session.discordUser) {
@@ -28,6 +52,7 @@ const discordAuthMiddleware = async (req, res, next) => {
 			`https://discord.com/api/v6/oauth2/authorize?${querystring.stringify({
 				client_id: process.env.DISCORD_CLIENT_ID,
 				scope: "identify guilds",
+				/* eslint-disable-next-line */
 				redirect_uri: `${process.env.ORIGIN}${basePath}/callback`,
 				state,
 				prompt: "none",
@@ -40,6 +65,8 @@ const discordAuthMiddleware = async (req, res, next) => {
 			const { state, code } = req.query;
 			if (state !== req.session.oauthState) {
 				throw new Error("Invalid OAuth2 state");
+			} else if (typeof code !== "string"){
+				throw new Error("Invalid OAuth2 code");
 			}
 
 			delete req.session.oauthState;
@@ -52,13 +79,15 @@ const discordAuthMiddleware = async (req, res, next) => {
 					client_secret: process.env.DISCORD_CLIENT_SECRET,
 					grant_type: "authorization_code",
 					code,
+					/* eslint-disable-next-line */
 					redirect_uri: `${process.env.ORIGIN}/auth/discord/callback`,
 					scope: "identify guilds"
 				}),
 				headers: { "Content-Type": "application/x-www-form-urlencoded" }
 			});
 
-			const token = tokenRequest.data.access_token;
+			/* eslint-disable-next-line */
+			const token: string = tokenRequest.data.access_token;
 
 			const userRequest = await axios({
 				method: "GET",
@@ -72,9 +101,12 @@ const discordAuthMiddleware = async (req, res, next) => {
 				headers: { Authorization: `Bearer ${token}` }
 			});
 
+			/* eslint-disable-next-line */
 			req.session.discordUser = userRequest.data;
-			req.session.discordUser.guilds = guildsRequest.data;
+			/* eslint-disable-next-line */
+			req.session.discordUser!.guilds = guildsRequest.data;
 
+			/* eslint-disable-next-line */
 			console.log(`Discord user authenticated: ${userRequest.data.id} (${userRequest.data.username}#${userRequest.data.discriminator})`);
 			res.redirect("/");
 		} catch (err) {
@@ -82,8 +114,6 @@ const discordAuthMiddleware = async (req, res, next) => {
 		}
 	} else {
 		// Invalid auth endpoint, redirect to log in page and go from there
-		req.redirect(basePath);
+		res.redirect(basePath);
 	}
 };
-
-module.exports = discordAuthMiddleware;

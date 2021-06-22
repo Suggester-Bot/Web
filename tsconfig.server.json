@@ -1,17 +1,16 @@
 {
 	"compilerOptions": {
+		"incremental": true,
 		"target": "ESNext",
 		"module": "CommonJS",
-		"noEmit": true,
-		"isolatedModules": true,
+		"outDir": "./dist/server",
 		"strict": true,
 		"moduleResolution": "node",
-		"jsx": "preserve",
 		"esModuleInterop": true,
 		"skipLibCheck": true,
 		"forceConsistentCasingInFileNames": true
 	},
 	"include": [
-		"src/**/*"
+		"src/server/**/*"
 	]
 }

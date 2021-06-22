@@ -1,17 +1,20 @@
-require("dotenv").config();
+import dotenv from "dotenv";
+dotenv.config();
 
 const port = process.env.PORT || 3000;
 
-const express = require("express");
-const expressSession = require("express-session");
-const MongoStore = require("connect-mongo");
-const helmet = require("helmet");
+import express from "express";
+import expressSession from "express-session";
+import MongoStore from "connect-mongo";
+import helmet from "helmet";
+import path from "path";
 
-const discordAuthMiddleware = require("./discordAuth.js");
+import { discordAuthMiddleware } from "./discordAuth";
 
 const isDev = process.env.NODE_ENV === "development";
 
 const app = express();
+
 app.use(helmet({
 	contentSecurityPolicy: {
 		directives: {
@@ -28,7 +31,8 @@ app.use(helmet({
 }));
 
 app.use(expressSession({
-	secret: process.env.SESSION_SECRET,
+	/* eslint-disable-next-line */
+	secret: process.env.SESSION_SECRET!,
 	resave: false,
 	saveUninitialized: true,
 	// TODO: configure secure cookies in production
@@ -46,6 +50,9 @@ app.get("/api/user", (req, res) => {
 });
 
 if (process.env.NODE_ENV === "development") {
+	/* eslint-disable @typescript-eslint/no-require-imports, @typescript-eslint/no-var-requires,
+	@typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access */
+
 	const webpack = require("webpack");
 	const webpackDevMiddleware = require("webpack-dev-middleware");
 	const webpackHotMiddleware = require("webpack-hot-middleware");
@@ -57,8 +64,12 @@ if (process.env.NODE_ENV === "development") {
 		publicPath: webpackConfig.output.publicPath
 	}));
 	app.use(webpackHotMiddleware(compiler));
+
+	/* eslint-enable @typescript-eslint/no-require-imports, @typescript-eslint/no-var-requires,
+	@typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access */
 } else {
-	app.use(express.static("dist"));
+	/* eslint-disable-next-line */
+	app.use(express.static(path.resolve(process.env.SESSION_MONGO_DB_NAME!)));
 }
 
 app.listen(port, () => console.log(`Listening on port ${port}!`));

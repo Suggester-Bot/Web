@@ -15,14 +15,17 @@ const app = express();
 app.use(helmet({
 	contentSecurityPolicy: {
 		directives: {
-			defaultSrc: ["'self'"],
-			baseUri: ["'self'"],
-			blockAllMixedContent: [],
-			imgSrc: ["'self'", "'data:'"],
-			objectSrc: ["'none'"],
-			scriptSrc: ["'self'"].concat(isDev ? ["'unsafe-inline'", "'unsafe-eval'"] : []),
-			scriptSrcAttr: ["'none'"],
-			styleSrc: ["'self'"]
+			"script-src": [
+				"'self'",
+
+				// Needed for the webpack eval devtools
+				IS_DEV && "'unsafe-eval'",
+
+				// Needed for the react devtools to work in firefox
+				// https://bugzilla.mozilla.org/show_bug.cgi?id=1267027
+				// https://github.com/facebook/react/issues/17997
+				IS_DEV && "'unsafe-inline'"
+			].filter(Boolean) as string[]
 		}
 	}
 }));

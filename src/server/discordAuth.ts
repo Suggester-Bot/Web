@@ -2,6 +2,7 @@ import querystring from "querystring";
 import { nanoid } from "nanoid";
 import axios from "axios";
 import type { RequestHandler } from "express";
+import { DISCORD_CLIENT_ID, DISCORD_CLIENT_SECRET, ORIGIN } from "./config";
 
 // TODO: remove `eslint-disable-next-line`s and actually fix the issues
 
@@ -50,10 +51,9 @@ export const discordAuthMiddleware: RequestHandler = async (req, res, next) => {
 
 		res.redirect(
 			`https://discord.com/api/v6/oauth2/authorize?${querystring.stringify({
-				client_id: process.env.DISCORD_CLIENT_ID,
+				client_id: DISCORD_CLIENT_ID,
 				scope: "identify guilds",
-				/* eslint-disable-next-line */
-				redirect_uri: `${process.env.ORIGIN}${basePath}/callback`,
+				redirect_uri: `${ORIGIN}${basePath}/callback`,
 				state,
 				prompt: "none",
 				response_type: "code"
@@ -75,12 +75,11 @@ export const discordAuthMiddleware: RequestHandler = async (req, res, next) => {
 				method: "POST",
 				url: "https://discord.com/api/v6/oauth2/token",
 				data: querystring.stringify({
-					client_id: process.env.DISCORD_CLIENT_ID,
-					client_secret: process.env.DISCORD_CLIENT_SECRET,
+					client_id: DISCORD_CLIENT_ID,
+					client_secret: DISCORD_CLIENT_SECRET,
 					grant_type: "authorization_code",
 					code,
-					/* eslint-disable-next-line */
-					redirect_uri: `${process.env.ORIGIN}/auth/discord/callback`,
+					redirect_uri: `${ORIGIN}/auth/discord/callback`,
 					scope: "identify guilds"
 				}),
 				headers: { "Content-Type": "application/x-www-form-urlencoded" }

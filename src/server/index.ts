@@ -1,8 +1,6 @@
 import dotenv from "dotenv";
 dotenv.config();
 
-const port = process.env.PORT || 3000;
-
 import express from "express";
 import expressSession from "express-session";
 import MongoStore from "connect-mongo";
@@ -10,8 +8,7 @@ import helmet from "helmet";
 import path from "path";
 
 import { discordAuthMiddleware } from "./discordAuth";
-
-const isDev = process.env.NODE_ENV === "development";
+import { IS_DEV, PORT, SESSION_MONGO_DB_NAME, SESSION_MONGO_URI, SESSION_SECRET } from "./config";
 
 const app = express();
 
@@ -32,14 +29,14 @@ app.use(helmet({
 
 app.use(expressSession({
 	/* eslint-disable-next-line */
-	secret: process.env.SESSION_SECRET!,
+	secret: SESSION_SECRET,
 	resave: false,
 	saveUninitialized: true,
 	// TODO: configure secure cookies in production
-	// cookie: { secure: process.env.NODE_ENV === "production" },
+	// cookie: { secure: !IS_DEV },
 	store: MongoStore.create({
-		mongoUrl: process.env.SESSION_MONGO_URI,
-		dbName: process.env.SESSION_MONGO_DB_NAME
+		mongoUrl: SESSION_MONGO_URI,
+		dbName: SESSION_MONGO_DB_NAME
 	})
 }));
 
@@ -49,7 +46,7 @@ app.get("/api/user", (req, res) => {
 	res.send(req.session.discordUser);
 });
 
-if (process.env.NODE_ENV === "development") {
+if (IS_DEV) {
 	/* eslint-disable @typescript-eslint/no-require-imports, @typescript-eslint/no-var-requires,
 	@typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access */
 
@@ -69,7 +66,7 @@ if (process.env.NODE_ENV === "development") {
 	@typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access */
 } else {
 	/* eslint-disable-next-line */
-	app.use(express.static(path.resolve(process.env.SESSION_MONGO_DB_NAME!)));
+	app.use(express.static(path.resolve(SESSION_MONGO_DB_NAME)));
 }
 
-app.listen(port, () => console.log(`Listening on port ${port}!`));
+app.listen(PORT, () => console.log(`Listening on port ${PORT}!`));

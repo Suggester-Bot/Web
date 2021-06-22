@@ -31,7 +31,6 @@ app.use(helmet({
 }));
 
 app.use(expressSession({
-	/* eslint-disable-next-line */
 	secret: SESSION_SECRET,
 	resave: false,
 	saveUninitialized: true,
@@ -68,7 +67,6 @@ if (IS_DEV) {
 	/* eslint-enable @typescript-eslint/no-require-imports, @typescript-eslint/no-var-requires,
 	@typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access */
 } else {
-	/* eslint-disable-next-line */
 	app.use(express.static(path.resolve(SESSION_MONGO_DB_NAME)));
 }
 

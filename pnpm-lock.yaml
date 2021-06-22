@@ -20,6 +20,7 @@ specifiers:
   clean-webpack-plugin: ^4.0.0-alpha.0
   concurrently: ^6.2.0
   connect-mongo: ^4.4.1
+  core-js: 3.15.0
   cross-env: ^7.0.3
   css-loader: ^5.2.6
   cssnano: ^5.0.6
@@ -62,6 +63,7 @@ dependencies:
   axios: 0.21.1
   babel-polyfill: 6.26.0
   connect-mongo: 4.4.1
+  core-js: 3.15.0
   dotenv: 10.0.0
   express: 4.17.1
   express-session: 1.17.2
@@ -2554,6 +2556,11 @@ packages:
   /core-js/2.6.12:
     resolution: {integrity: sha512-Kb2wC0fvsWfQrgk8HU5lW6U/Lcs8+9aaYcy4ZFc6DDlo4nZ7n70dEgE5rtR0oG6ufKDUnrwfWL1mXR5ljDatrQ==}
     deprecated: core-js@<3.3 is no longer maintained and not recommended for usage due to the number of issues. Because of the V8 engine whims, feature detection in old core-js versions could cause a slowdown up to 100x even if nothing is polyfilled. Please, upgrade your dependencies to the actual version of core-js.
+    requiresBuild: true
+    dev: false
+
+  /core-js/3.15.0:
+    resolution: {integrity: sha512-GUbtPllXMYRzIgHNZ4dTYTcUemls2cni83Q4Q/TrFONHfhcg9oEGOtaGHfb0cpzec60P96UKPvMkjX1jET8rUw==}
     requiresBuild: true
     dev: false
 

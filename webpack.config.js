@@ -35,13 +35,13 @@ module.exports = {
 	module: {
 		rules: [
 			{
-				test: /\.[jt]sx?$/,
+				test: /\.tsx?$/,
 				exclude: /node_modules/,
 				use: {
 					loader: "babel-loader",
 					options: {
 						presets: [
-							"@babel/preset-env",
+							["@babel/preset-env", { useBuiltIns: "usage", corejs: "3.15.0", browserslistEnv: isDev ? "development" : "production" }],
 							["@babel/preset-react", { runtime: "automatic", development: isDev }],
 							"@babel/preset-typescript"
 						],
